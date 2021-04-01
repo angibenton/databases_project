@@ -1,2 +1,9 @@
 Emilia Ochoa (eochoa6)
 Angi Benton (abenton3)
+
+-- Data Sources -- 
+Unemployment: https://www.bls.gov/data/
+GDP: https://fred.stlouisfed.org/
+S&P 500: https://www.macrotrends.net/
+
+
