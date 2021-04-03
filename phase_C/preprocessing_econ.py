@@ -1,9 +1,10 @@
 import pandas as pd
-
+#years constrained by the billboard data 
+START_YEAR = 1959
+END_YEAR = 2017
 #empty dataframe analogous to the EconomicHealth relation 
 econHealth = pd.DataFrame()
 
-#note: all csv files are already 1948-2020 
 
 #UNEMPLOYMENT RATE
 ue_monthly = pd.read_csv("sourceData/unemployment_monthly.csv") 
@@ -22,10 +23,13 @@ snp_roi = pd.read_csv("sourceData/sp-500-historical-annual-returns.csv")
 print(snp_roi)
 econHealth["snpRoi"] = snp_roi['roi']
 
-#look at the cute dataframe we made :) 
+#restrict years between START_YEAR and END_YEAR 
+econHealth = econHealth[(econHealth.year >= START_YEAR) & (econHealth.year <= END_YEAR)]
 print(econHealth)
+
 #export to a text file with no row numbers, no headers, and 4 decimal places 
 econHealth.to_csv("EconomicHealth.txt", index = False, header = False, float_format = "%.4f") 
+
 #TODO: get the 8-15 row subset of econHealth for EconomicHealth-small.txt
 
 
