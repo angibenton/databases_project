@@ -5,5 +5,5 @@ Angi Benton (abenton3)
 Unemployment: https://www.bls.gov/data/
 GDP: https://fred.stlouisfed.org/
 S&P 500: https://www.macrotrends.net/
-@Emilia can you add hotstuff.csv and billboard.yearly idr where you got them 
-
+Billboard Top 100: https://github.com/AntiDeprime/billboard-year-end-wiki-scraper/blob/master/billboard-year-end-wiki.csv
+Hot Spotify + Hot Stuff: https://data.world/kcmillersean/billboard-hot-100-1958-2017
