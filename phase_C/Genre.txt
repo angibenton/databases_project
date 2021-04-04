@@ -1,4 +1,3 @@
-Genre
 pop  
 dance pop 
 pop rap 

@@ -7,3 +7,4 @@ GDP: https://fred.stlouisfed.org/
 S&P 500: https://www.macrotrends.net/
 Billboard Top 100: https://github.com/AntiDeprime/billboard-year-end-wiki-scraper/blob/master/billboard-year-end-wiki.csv
 Hot Spotify + Hot Stuff: https://data.world/kcmillersean/billboard-hot-100-1958-2017
+Spotify Genres: https://www.prefixmag.com/news/1387-different-music-genres-discovered-spotify/203669/

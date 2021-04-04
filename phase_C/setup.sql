@@ -29,7 +29,7 @@ SELECT * FROM Administration
 DROP TABLE IF EXISTS Administration;
 CREATE TABLE Administration
 (
-president VARCHAR(20),
+president VARCHAR(25),
 startYear INT,
 endYear INT,
 PRIMARY KEY (startYear, endYear),
@@ -44,4 +44,19 @@ COLUMNS TERMINATED BY ','
 LINES TERMINATED BY '\n'; 
 
 
-SELECT * FROM Administration 
+DROP TABLE IF EXISTS Genre;
+CREATE TABLE Genre
+(
+genre VARCHAR(25),
+PRIMARY KEY (genre)
+);
+
+
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases1/databases_project/phase_C/Genre.txt' 
+INTO TABLE Genre
+COLUMNS TERMINATED BY '  '
+LINES TERMINATED BY '\n'; 
+
+
+
+SELECT * FROM Genre 
