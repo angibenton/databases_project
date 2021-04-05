@@ -5,6 +5,16 @@ Angi Benton (abenton3)
 Unemployment: https://www.bls.gov/data/
 GDP: https://fred.stlouisfed.org/
 S&P 500: https://www.macrotrends.net/
+Administrations: https://www.kaggle.com/harshitagpt/us-presidents
 Billboard Top 100: https://github.com/AntiDeprime/billboard-year-end-wiki-scraper/blob/master/billboard-year-end-wiki.csv
 Hot Spotify + Hot Stuff: https://data.world/kcmillersean/billboard-hot-100-1958-2017
 Spotify Genres: https://www.prefixmag.com/news/1387-different-music-genres-discovered-spotify/203669/
+
+-- Workflow --
+* download csv files from the sources above
+* in a python script, open the csv files as pandas dataframes 
+* manipulate these dataframes until we have a dataframe for each of our relations
+@emilia should we just attach the python scripts to the submission rather than explain them here?
+with good comments maybe its okay 
+* save these final dataframes as .txt files, with commas separated by ',', rows by '\n'
+

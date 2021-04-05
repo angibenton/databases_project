@@ -1,0 +1,30 @@
+816,Collide,Howie Day,1,"['acoustic pop', 'neo mellow', 'pop rock']",11.0,93.931,0.636,0.625,0.222,5.3500000000000006e-05,0.11900000000000001,0.342
+878,Cover Girl,New Kids on the Block,0,,,,,,,,,
+2993,Michael,The Highwaymen,1,"['country rock', 'outlaw country']",0.0,103.182,0.48,0.237,0.86,0.128,0.945,0.469
+2378,Invisible Man,98 Degrees,1,[],,,,,,,,
+4510,The Night Chicago Died,Paper Lace,1,"['bubblegum pop', 'classic uk pop']",0.0,106.84700000000001,0.767,0.45,0.34700000000000003,0.0,0.113,0.809
+5373,You've Really Got a Hold on Me,The Miracles,0,,,,,,,,,
+830,Come a Little Bit Closer,Jay and the Americans,0,,,,,,,,,
+1779,Here (In Your Arms),Hellogoodbye,1,"['emo', 'indie pop', 'neon pop punk', 'pop emo', 'pop punk']",5.0,126.02799999999999,0.706,0.621,0.213,0.0020800000000000003,0.253,0.785
+2716,Like a Virgin,Madonna,0,,,,,,,,,
+5245,Wrecking Ball,Miley Cyrus,1,"['dance pop', 'pop', 'post-teen pop']",5.0,119.964,0.53,0.42200000000000004,0.40700000000000003,0.0,0.107,0.349
+2545,Keep on Walkin',CeCe Peniston,0,,,,,,,,,
+2412,It's Getting Better,"Mama"" Cass Elliot",0,,,,,,,,,
+4640,Thinking of You,Sa-Fire,0,,,,,,,,,
+4916,Waiting for Tonight,Jennifer Lopez,0,,,,,,,,,
+3874,Shake You Down,Gregory Abbott,1,[],11.0,94.995,0.787,0.474,0.523,0.0,0.235,0.826
+3366,Only Wanna Be with You,Hootie & the Blowfish,0,,,,,,,,,
+2256,I'm Your Angel,R. Kelly and Celine Dion,0,,,,,,,,,
+5015,What Are We Doin' in Love,Dottie West & Kenny Rogers,0,,,,,,,,,
+4134,Star Wars (Main Title),London Symphony Orchestra,1,"['classical', 'classical performance', 'orchestra']",,,,,,,,
+2781,Look What You Made Me Do,Taylor Swift,1,"['pop', 'post-teen pop']",9.0,128.07,0.766,0.7090000000000001,0.204,1.4099999999999999e-05,0.126,0.506
+4606,Then,Brad Paisley,1,"['contemporary country', 'country', 'country road']",0.0,144.717,0.493,0.643,0.512,2.42e-05,0.209,0.3
+17,(It's Just) The Way That You Love Me,Paula Abdul,1,"['dance pop', 'europop', 'new wave pop', 'pop rock', 'urban contemporary']",,,,,,,,
+3585,Raise Your Glass,Pink,0,,,,,,,,,
+4857,Uma Thurman,Fall Out Boy,1,"['emo', 'modern rock', 'pop punk']",4.0,149.958,0.623,0.956,0.11900000000000001,0.000227,0.617,0.7390000000000001
+4696,Tighten Up,Archie Bell & the Drells,0,,,,,,,,,
+975,Day by Day,Original Cast of Godspell,0,,,,,,,,,
+1078,Doctor My Eyes,Jackson Browne,1,"['album rock', 'classic rock', 'country rock', 'folk', 'folk rock', 'heartland rock', 'mellow gold', 'piano rock', 'rock', 'roots rock', 'singer-songwriter', 'soft rock']",5.0,75.63,0.48,0.626,0.266,5.6999999999999996e-05,0.0857,0.542
+3300,"Oh, Pretty Woman",Roy Orbison,1,,,,,,,,,
+3263,Nothing Compares 2 U,Sinéad O'Connor,0,,,,,,,,,
+3230,No More I Love You's,Annie Lennox,0,,,,,,,,,
