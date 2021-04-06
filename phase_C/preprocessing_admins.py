@@ -21,5 +21,5 @@ admins = admins[(admins.startYear >= START_YEAR) & (admins.startYear <= END_YEAR
 
 print(admins)
 
-#export to a text file with no row numbers, no headers, and 4 decimal places 
+#export to a text file with no row numbers, no headers
 admins.to_csv("Administration.txt", index = False, header = False) 

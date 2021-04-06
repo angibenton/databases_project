@@ -30,7 +30,6 @@ print(econHealth)
 #export to a text file with no row numbers, no headers, and 4 decimal places 
 econHealth.to_csv("EconomicHealth.txt", index = False, header = False, float_format = "%.4f") 
 
-#TODO: get the 8-15 row subset of econHealth for EconomicHealth-small.txt
 
 
 
