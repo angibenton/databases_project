@@ -58,5 +58,58 @@ LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases1/databases_project/phase_C/Ge
 INTO TABLE Genre
 COLUMNS TERMINATED BY '  '
 LINES TERMINATED BY '\n'; 
-
 SELECT * FROM Genre 
+
+
+
+--Create Song relation
+
+DROP TABLE IF EXISTS Song;
+CREATE TABLE Song 
+(
+id INT, 
+song VARCHAR(25),
+artist VARCHAR(25),
+musicKey INT,
+tempo REAL,
+danceability REAL,
+energy REAL,
+acousticness REAL,
+instrumentalness REAL,
+liveness REAL,
+valence REAL,
+
+PRIMARY KEY (id)
+);
+
+-- @Emilia change this to your own full path for it to work (it is a hate crime thta you have to do it though)
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases1/databases_project/phase_C/Song-small.txt' 
+INTO TABLE Song
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'; 
+
+SELECT * FROM Song 
+
+-- so many 0.0 values ;-;
+
+
+
+--Create BillboardChart relation
+
+DROP TABLE IF EXISTS BillboardChart;
+CREATE TABLE BillboardChart 
+(
+songID INT, 
+year INT,
+position INT,
+PRIMARY KEY (songID, year),
+FOREIGN KEY(songId) REFERENCES Song(id)
+);
+
+-- @Emilia change this to your own full path for it to work (it is a hate crime thta you have to do it though)
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases1/databases_project/phase_C/BillboardChart-small.txt' 
+INTO TABLE BillboardChart
+COLUMNS TERMINATED BY ','
+LINES TERMINATED BY '\n'; 
+
+SELECT * FROM BillboardChart
