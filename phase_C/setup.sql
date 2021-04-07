@@ -98,7 +98,7 @@ FOREIGN KEY (genre) REFERENCES Genre(id)
 --Change this to your full path
 LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases1/databases_project/phase_C/SongGenre.txt' 
 INTO TABLE SongGenre
-COLUMNS TERMINATED BY '  '
+COLUMNS TERMINATED BY ','
 LINES TERMINATED BY '\n'; 
 
 SELECT * FROM SongGenre 
