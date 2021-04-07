@@ -9,4 +9,6 @@ DROP TABLE Genre;
 
 DROP TABLE BillboardChart;
 
+DROP TABLE SongGenre;
+
 DROP TABLE Song;

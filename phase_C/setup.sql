@@ -1,7 +1,6 @@
 --Emilia Ochoa (eochoa6)
 --Angi Benton (abenton3)
 
-DROP TABLE IF EXISTS EconomicHealth;
 CREATE TABLE EconomicHealth 
 (
 year INT,
@@ -25,7 +24,6 @@ SELECT * FROM EconomicHealth
 
 --Create Administration relation
 
-DROP TABLE IF EXISTS Administration;
 CREATE TABLE Administration
 (
 president VARCHAR(25),
@@ -45,7 +43,6 @@ SELECT * FROM Administration
 
 
 --Create Genre relation
-DROP TABLE IF EXISTS Genre;
 CREATE TABLE Genre
 (
 genre VARCHAR(25),
@@ -62,8 +59,6 @@ SELECT * FROM Genre
 
 
 --Create Song relation
-
-DROP TABLE IF EXISTS Song;
 CREATE TABLE Song 
 (
 id INT, 
@@ -89,10 +84,27 @@ LINES TERMINATED BY '\n';
 SELECT * FROM Song 
 
 
+--Create SongGenre relation
+CREATE TABLE SongGenre
+(
+songID INT,
+genre VARCHAR(25),
+PRIMARY KEY (songID, genre)
+FOREIGN KEY (songID) REFERENCES Song(id)
+FOREIGN KEY (genre) REFERENCES Genre(id)
+);
+
+
+--Change this to your full path
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases1/databases_project/phase_C/SongGenre.txt' 
+INTO TABLE SongGenre
+COLUMNS TERMINATED BY '  '
+LINES TERMINATED BY '\n'; 
+
+SELECT * FROM SongGenre 
+
 
 --Create BillboardChart relation
-
-DROP TABLE IF EXISTS BillboardChart;
 CREATE TABLE BillboardChart 
 (
 songID INT, 
