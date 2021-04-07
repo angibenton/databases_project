@@ -1,12 +1,16 @@
-#INPUT DATA: billboard_yearly.csv, hotStuff.csv, spotify_genre_list.txt
+#INPUT DATA: billboard_yearly.csv, hotStuff.csv,
 #OUTPUT DATA: Song.txt, Genre.txt, SongGenre.txt, BillboardChart.txt
+
 import pandas as pd 
 import json 
 
 #Helper functions!
+
+# e.g., "Jay-Z featuring Beyonce" -> "Jay-Z"
 def removeFeature(artistName):
   return artistName.split(' featuring')[0]
 
+# get an array of genres from strings of the form "['pop', 'rap']"
 def getGenreArrayFromString(str):
   try: 
     str = str.replace("'", '"')
@@ -16,17 +20,18 @@ def getGenreArrayFromString(str):
   except Exception as e: #bad str 
     return []
   
-bb = pd.read_csv("sourceData/billboard_yearly.csv")
-hotSpotify = pd.read_csv("sourceData/hotSpotify.csv", encoding ='latin1')
+#open source data
+bb = pd.read_csv("billboard_yearly.csv")
+hotSpotify = pd.read_csv("hotSpotify.csv", encoding ='latin1')
 
-#Set up the dataframes for each of our relations 
+#set up the dataframes for each of our relations 
 Song = pd.DataFrame(columns = ['songId', 'title', 'artist', 'genres', 'key', 'tempo', 
 'danceability', 'energy', 'acousticness', 'instrumentalness', 'liveness', 'valence'])
 BillboardChart = pd.DataFrame(columns = ['songId', 'chartYear', 'chartPosition'], dtype = int)
-Genre = pd.read_csv("sourceData/spotify_genre_list.txt") #might modify this a little 
+Genre = pd.DataFrame(columns = ["genreName"]) 
 SongGenre = pd.DataFrame(columns = ["songId", "genreName"])
 
-#CLEAN THE BILLBOARD DATA
+#clean the billboard data
 bb = bb.sort_values(by = ['title', 'artist', 'year']) #sort by song (useful for removing duplicates)
 bb = bb.reset_index(drop=True) 
 bb = bb.drop("Unnamed: 0",axis=1)
@@ -34,7 +39,7 @@ bb = bb.drop("Unnamed: 0",axis=1)
 #LOG 
 print("Building Song and BillboardChart from billboard data...")
 
-#extract everything relevant from bb (Part of Song relation, all of BillboardChart relation)
+#extract everything relevant from billboard data (Part of Song relation, all of BillboardChart relation)
 curSongId = -1
 curTitle = ""
 curArtist = ""
@@ -50,10 +55,7 @@ for i, row in bb.iterrows():
   BillboardChart = BillboardChart.append(new_chart, ignore_index = True)
 
 BillboardChart = BillboardChart.sort_values(by = ["chartYear"])
-
-
-#Song = Song.sample(30) #TEMPORARILY make Song much smaller 
-
+  
 #LOG 
 print("Matching Song with spotify data...")
 
@@ -83,9 +85,8 @@ for bbIndex, bbRow in Song.iterrows():
 print("Building Genre and SongGenre from spotify data...")
 
 #GENRES
-#parse the genres string 
-#associate Song and Genre using the SongGenre relation
-#add in any genres that are missing from Genre
+  #parse the genres string 
+  #associate Song and Genre using the SongGenre relation
 Genre["relevant"] = 0;
 songsWithGoodGenreString = 0;
 Genre.set_index("genreName", inplace = True)
@@ -94,17 +95,13 @@ for index, song in Song[Song.spotifyMatchFound == 1].iterrows():
   if(len(genres) > 0):
     songsWithGoodGenreString += 1
   for genre in genres: 
-    try: #rememeber that this genre is relevant!
-      Genre.loc[genre]["relevant"] = 1
-    except KeyError as e: # genre is not already a genreName in the Genre table
-      #just add it, and mark relevant 
-      new_genre = {"genreName": genre, "relevant": 1}
+    # remember this genre if we haven't seen it yet
+    if(Genre.isin(['genre']).any().any() == False): 
+      new_genre = {"genreName": genre}
       Genre = Genre.append(new_genre, ignore_index = True)
     #record that this song is in this genre 
     new_song_genre = {'songId': song['songId'], 'genreName': genre }
     SongGenre = SongGenre.append(new_song_genre, ignore_index = True)
-#remove genres that we don't have songs for 
-Genre = Genre[Genre.relevant == 1]
 
 #report statistics
 spotifyMatchPercent = Song[Song.spotifyMatchFound == 1].shape[0] / Song.shape[0] * 100
@@ -115,7 +112,7 @@ print("%.1f%% of billboard songs have a spotify match, and %.1f%% of those had p
 Song = Song.drop(columns = ["genres", "spotifyMatchFound"]) #should we keep spotify match found ? 
 Genre = Genre.drop(columns = ["relevant"])
 
-#Final exports 
+#final exports 
 BillboardChart.to_csv("BillboardChart.txt", header = False, index = False)
 Song.to_csv("Song.txt", header = False, index = False)
 Genre.to_csv("Genre.txt", header = False, index = False)
