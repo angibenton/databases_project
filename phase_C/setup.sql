@@ -14,7 +14,7 @@ CHECK (-100 <= snpRoi)
 );
 
 --Change this to your full path
-LOAD DATA LOCAL INFILE '/Users/angibenton/Desktop/databases/databases_project/phase_C/EconomicHealth.txt' 
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases1/databases_project/phase_C/EconomicHealth.txt' 
 INTO TABLE EconomicHealth
 COLUMNS TERMINATED BY ','
 LINES TERMINATED BY '\n'; 
