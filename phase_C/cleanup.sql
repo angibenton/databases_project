@@ -1,14 +1,14 @@
 --Emilia Ochoa (eochoa6)
 --Angi Benton (abenton3)
 
-DROP TABLE EconomicHealth;
+DROP TABLE IF EXISTS EconomicHealth;
 
-DROP TABLE Administration;
+DROP TABLE IF EXISTS Administration;
 
-DROP TABLE Genre;
+DROP TABLE IF EXISTS BillboardChart;
 
-DROP TABLE BillboardChart;
+DROP TABLE IF EXISTS SongGenre;
 
-DROP TABLE SongGenre;
+DROP TABLE IF EXISTS Genre;
 
-DROP TABLE Song;
+DROP TABLE IF EXISTS Song;

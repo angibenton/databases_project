@@ -45,7 +45,7 @@ SELECT * FROM Administration
 --Create Genre relation
 CREATE TABLE Genre
 (
-genre VARCHAR(25),
+genre VARCHAR(50),
 PRIMARY KEY (genre)
 );
 
@@ -88,10 +88,10 @@ SELECT * FROM Song
 CREATE TABLE SongGenre
 (
 songID INT,
-genre VARCHAR(25),
-PRIMARY KEY (songID, genre)
-FOREIGN KEY (songID) REFERENCES Song(id)
-FOREIGN KEY (genre) REFERENCES Genre(id)
+genre VARCHAR(50),
+PRIMARY KEY (songID, genre),
+FOREIGN KEY (songID) REFERENCES Song(id),
+FOREIGN KEY (genre) REFERENCES Genre(genre)
 );
 
 

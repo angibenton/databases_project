@@ -44,14 +44,14 @@ SELECT * FROM Administration
 --Create Genre relation
 CREATE TABLE Genre
 (
-genre VARCHAR(25),
+genre VARCHAR(50),
 PRIMARY KEY (genre)
 );
 
 --Change this to your full path
 LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases1/databases_project/phase_C/Genre-small.txt' 
 INTO TABLE Genre
-COLUMNS TERMINATED BY '  '
+COLUMNS TERMINATED BY ','
 LINES TERMINATED BY '\n'; 
 SELECT * FROM Genre 
 
@@ -90,7 +90,7 @@ SELECT * FROM Song
 CREATE TABLE SongGenre
 (
 songID INT,
-genre VARCHAR(25),
+genre VARCHAR(50),
 PRIMARY KEY (songID, genre),
 FOREIGN KEY(songID) REFERENCES Song(id),
 FOREIGN KEY(genre) REFERENCES Genre(genre)
