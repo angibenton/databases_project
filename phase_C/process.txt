@@ -1,20 +1,40 @@
 Emilia Ochoa (eochoa6)
 Angi Benton (abenton3)
 
--- Data Sources -- 
-Unemployment: https://www.bls.gov/data/
-GDP: https://fred.stlouisfed.org/
-S&P 500: https://www.macrotrends.net/
-Administrations: https://www.kaggle.com/harshitagpt/us-presidents
-Billboard Top 100: https://github.com/AntiDeprime/billboard-year-end-wiki-scraper/blob/master/billboard-year-end-wiki.csv
-Hot Spotify + Hot Stuff: https://data.world/kcmillersean/billboard-hot-100-1958-2017
-Spotify Genres: https://www.prefixmag.com/news/1387-different-music-genres-discovered-spotify/203669/
+Our process was a bit more complex than expected, so we have attached our scripts and source data files - we hope they can offer extra clarification if needed. 
 
--- Workflow --
-* download csv files from the sources above
-* in a python script, open the csv files as pandas dataframes 
-* manipulate these dataframes until we have a dataframe for each of our relations
-@emilia should we just attach the python scripts to the submission rather than explain them here?
-with good comments maybe its okay 
-* save these final dataframes as .txt files, with commas separated by ',', rows by '\n'
+— Data Sources —
+* unemployment_monthly.csv <- https://www.bls.gov/data/
+* GDP_percent_change_annual.csv <- https://fred.stlouisfed.org/
+* sp-500-historical-annual-returns.csv <-  https://www.macrotrends.net/
+* presidents.csv <- https://www.kaggle.com/harshitagpt/us-presidents
+* billboard_yearly.csv <- https://github.com/AntiDeprime/billboard-year-end-wiki-scraper/blob/master/billboard-year-end-wiki.csv
+* hotSpotify.csv <-  https://data.world/kcmillersean/billboard-hot-100-1958-2017
 
+— General process —  
+* Download csv files from the sources listed 
+* Open these csv files as pandas data frames in python scripts
+* Manipulate / combine / separate these dataframes until we are left with one data frame per relation
+* Export each dataframe as a text file (comma separated)
+
+Note:
+For all relations that span a certain number of years, we restricted them to 1959-2017 so that all of our data refers to the same time period. Our billboard data is the source of this constraint. 
+
+— Specific origins of each relation — 
+
+>> EconomicHealth: see preprocessing_econ.py
+Essentially column concatenation, from:  
+GDP_percent_change_annual.csv,
+sp-500-historical-annual-returns.csv, 
+and unemployment_monthly.csv (we had to take the mean over 12 months to convert to annual). 
+
+>> Administration: see preprocessing_admins.py
+presidents.csv was pretty close to what we wanted, we just had to drop irrelevant columns, and convert the start and end date strings to only years.  
+
+>> Music data (Song, BillboardChart, Genre, SongGenre relations): see preprocessing_music.py
+
+We separated billboard_yearly.csv into Song and BillboardChart, to reduce redundancy (some songs occupied chart positions more than once). We added songIds to help with this, giving a unique integer to songs with distinct (title, artistname). Then we associated songIds with a billboard chart year and chart position.  
+
+Then, we added more attributes to Song based on song metadata from Spotify hotSpotify.csv, such as tempo, key, and genre. 
+
+The attribute “genre” was actually a JSON string representation of an array of multiple genre names, so we had parse this string, and make a new relation, SongGenre, to record associations between a songId and a single genre name. We also maintain a Genre relation, which is a single attribute “lookup table” of all genres in this project. 
