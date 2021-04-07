@@ -95,13 +95,13 @@ for index, song in Song[Song.spotifyMatchFound == 1].iterrows():
   if(len(genres) > 0):
     songsWithGoodGenreString += 1
   for genre in genres: 
-    # remember this genre if we haven't seen it yet
-    if(Genre.isin(['genre']).any().any() == False): 
-      new_genre = {"genreName": genre}
-      Genre = Genre.append(new_genre, ignore_index = True)
-    #record that this song is in this genre 
+    # remember this genre 
+    new_genre = {"genreName": genre}
+    Genre = Genre.append(new_genre, ignore_index = True)
+    # record that this song is in this genre 
     new_song_genre = {'songId': song['songId'], 'genreName': genre }
     SongGenre = SongGenre.append(new_song_genre, ignore_index = True)
+Genre.drop_duplicates(inplace = True, ignore_index = True)
 
 #report statistics
 spotifyMatchPercent = Song[Song.spotifyMatchFound == 1].shape[0] / Song.shape[0] * 100
