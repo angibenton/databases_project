@@ -1,0 +1,14 @@
+Emilia Ochoa (eochoa6)
+Angi Benton (abenton3)
+Project Phase D 
+
+—— PART 0: Updates From Phase C —— 
+We had to update our data cleaning process because we realized that using a ‘,’ separator was causing problems for song names that name commas in them. We fixed this by using a ‘\t’ separator. We updated the scripts that generate our text files, as well as the sql setup scripts. 
+
+Updated files (included):
+preprocessing_music.py
+Song.txt
+SongGenre.txt
+BillboardChart.txt 
+setup.sql
+setup-small.sql
