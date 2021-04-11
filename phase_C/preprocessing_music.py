@@ -10,6 +10,14 @@ import json
 def removeFeature(artistName):
   return artistName.split(' featuring')[0]
 
+#e.g., "Sugar, we're going down" -> "sugar we're going down "
+def removeComma(title):
+  #title = title.replace('\"', '')
+  #return title.replace('\'', '')
+  return title.replace(',', '')
+
+
+
 # get an array of genres from strings of the form "['pop', 'rap']"
 def getGenreArrayFromString(str):
   try: 
@@ -45,10 +53,10 @@ curTitle = ""
 curArtist = ""
 for i, row in bb.iterrows():
   if((curTitle != row['title']) | (curArtist  != row['artist'])): 
-    #new song!! 
-    curTitle, curArtist = row['title'], row['artist']
+    #new song!!
+    curTitle, curArtist = row['title'], removeFeature(row['artist']) #EMI EDITED
     curSongId += 1 #get a new id for this song 
-    new_song = {'songId': curSongId, 'title': curTitle, 'artist': removeFeature(curArtist)} #strip artist name of "featuring ... "
+    new_song = {'songId': curSongId, 'title': curTitle, 'artist': curArtist} #strip artist name of "featuring ... " EMI EDITED
     Song = Song.append(new_song, ignore_index = True)
   #new song or not, we should associate this song with the chart   
   new_chart = {'songId': curSongId, 'chartYear': row['year'], 'chartPosition': row['number']}
@@ -113,10 +121,10 @@ Song = Song.drop(columns = ["genres", "spotifyMatchFound"]) #should we keep spot
 Genre = Genre.drop(columns = ["relevant"])
 
 #final exports 
-BillboardChart.to_csv("BillboardChart.txt", header = False, index = False)
-Song.to_csv("Song.txt", header = False, index = False)
-Genre.to_csv("Genre.txt", header = False, index = False)
-SongGenre.to_csv("SongGenre.txt", header = False, index = False)
+BillboardChart.to_csv("BillboardChart.txt", header = False, index = False, sep = '\t')
+Song.to_csv("Song.txt", header = False, index = False, sep = '\t')
+Genre.to_csv("Genre.txt", header = False, index = False, sep = '\t')
+SongGenre.to_csv("SongGenre.txt", header = False, index = False, sep = '\t')
 
 
 
