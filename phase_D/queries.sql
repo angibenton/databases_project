@@ -2,18 +2,32 @@
 --Angi Benton (abenton3)
 
 -- 1. Who was the most popular musician during each U.S. president's administration?
-SELECT B.songID, A.president, AVG(B.position)
-FROM Administration AS A JOIN BillboardChart AS B
-WHERE B.year >= A.startYear AND B.year < A.endYear
-GROUP BY songID;
 
-SELECT S.artist, S.id Sadmin.president, AVG(pos)
-FROM Song AS S JOIN (SELECT B.songID, A.president, AVG(B.position) AS pos
-                FROM Administration AS A JOIN BillboardChart AS B
-                WHERE B.year >= A.startYear AND B.year < A.endYear
-                GROUP BY songID) AS Sadmin
-WHERE S.id = Sadmin.songID
-GROUP BY S.artist, Sadmin.president
+WITH 
+        songNArtist AS (SELECT artist, Song.id AS songID, position, year
+                        FROM BillboardChart JOIN Song
+                        WHERE Song.id = BillboardChart.songID),
+                        
+        songPosOverAdmin AS (SELECT B.songID, B.artist, A.president, AVG(B.position) AS songPos
+                        FROM Administration AS A JOIN songNArtist AS B
+                        WHERE B.year >= A.startYear AND B.year < A.endYear
+                        GROUP BY songID),
+
+        artistsPosOverAdmin AS (SELECT artist, president, AVG(songPos)
+                                FROM songPosOverAdmin
+                                GROUP BY artist, president)
+                                
+        
+        
+        maxPosOverAdmin AS (SELECT MIN(artistPos) as m, president
+                            FROM artistsPosOverAdmin
+                            GROUP BY president)
+SELECT *
+FROM artistsPosOverAdmin AS A JOIN maxPosOverAdmin AS M
+ON A.president = M.president 
+WHERE A.artistPos = M.m
+        
+
 
 
 
@@ -32,7 +46,26 @@ GROUP BY S.artist, Sadmin.president
 --13. What was the average ‘valence’ of the top 100 songs in years where the unemployment rate was above 4%, listed in increasing order?
 --*14. What was the average unemployment date during years when the majority of the top 100 songs were ‘minor’ ?
 --*15. What was the percentage of songs listed as ‘explicit’ during years where the stock market fell more than 300 points?
---16. What was the total number of years where the most popular genre was ‘rap’, and the S&P 500 stayed within 10%?
+
+--16. List the years where the most popular genre in the top 100 songs was ‘pop’, --- and the S&P 500 stayed within 10%
+
+WITH popCntByYr AS  (SELECT BC.year, COUNT(SG.songID) AS cnt
+                     FROM SongGenre AS SG JOIN BillboardChart AS BC
+                     ON SG.songID = BC.songID
+                     WHERE SG.genre LIKE 'pop'        
+                     GROUP BY BC.year),
+
+     yearMaxes AS (SELECT A.year, MAX(A.cnt) AS maxs
+                   FROM (SELECT BC.year, SG.genre, count(SG.genre) AS cnt
+                         FROM SongGenre AS SG JOIN BillboardChart AS BC
+                         ON SG.songID = BC.songID
+                         GROUP BY SG.genre, BC.year)  AS A
+                   GROUP BY A.year)
+SELECT yearMaxes.year AS year, maxs as numPopSongs
+FROM popCntByYr JOIN yearMaxes 
+        ON popCntByYr.cnt = maxs AND popCntByYr.year = yearMaxes.year
+
+
 --17. For each year where unemployment decreased by more than 1%, what was the average  ‘liveliness’ of the top 100 songs released in January, vs those released in December?
 --18. What was the average tempo of the top 100 songs of each decade, compared to the average tempo of the top 100 songs in the year with the highest unemployment rate in each decade? 
 --*19. What was the average ‘popularity’ of songs with a tempo over 125, during years where the average unemployment rate was below 3%? 
