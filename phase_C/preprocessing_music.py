@@ -21,7 +21,7 @@ def getGenreArrayFromString(str):
     return []
   
 #open source data
-bb = pd.read_csv("billboard_yearly.csv")
+bb = pd.read_csv("billboard_yearly_FIXED.csv")
 hotSpotify = pd.read_csv("hotSpotify.csv", encoding ='latin1')
 
 #set up the dataframes for each of our relations 

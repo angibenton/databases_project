@@ -1,3 +1,7 @@
+dance pop
+pop
+r&b
+urban contemporary
 adult standards
 brill building pop
 bubblegum pop
@@ -17,10 +21,8 @@ new romantic
 new wave
 new wave pop
 synthpop
-dance pop
 europop
 pop rock
-urban contemporary
 art rock
 permanent wave
 disco
@@ -41,16 +43,16 @@ cool jazz
 jazz
 lounge
 vocal jazz
-pop
 post-teen pop
-alternative r&b
-deep pop r&b
+east coast hip hop
 hip hop
-hip pop
-neo soul
-r&b
 pop rap
 rap
+southern hip hop
+alternative r&b
+deep pop r&b
+hip pop
+neo soul
 g funk
 gangster rap
 west coast rap
@@ -77,18 +79,17 @@ tropical
 electropop
 metropopolis
 baton rouge rap
-southern hip hop
 trap
 atl hip hop
 dirty south rap
 punk
-east coast hip hop
 queens hip hop
 underground hip hop
 new jack swing
 new orleans rap
 funk
 motown
+yacht rock
 new jersey rap
 british soul
 tropical house
@@ -117,13 +118,13 @@ new age piano
 acoustic pop
 lilith
 piano rock
+viral pop
 glam rock
 roots rock
 traditional country
 nu metal
 canadian singer-songwriter
 ectofolk
-yacht rock
 girl group
 heartland rock
 singer-songwriter
@@ -140,7 +141,6 @@ chicago soul
 boy band
 chicago rap
 miami hip hop
-viral pop
 blues rock
 hard rock
 southern rock
@@ -219,6 +219,7 @@ freestyle
 bassline
 canadian hip hop
 toronto rap
+barbadian pop
 britpop
 shoegaze
 melodic rap
@@ -231,7 +232,6 @@ italo dance
 brit funk
 hardcore hip hop
 ballroom
-barbadian pop
 celtic rock
 canadian country
 indie soul
@@ -240,6 +240,7 @@ alternative dance
 indietronica
 neo-synthpop
 new rave
+rap metal
 deep adult standards
 funk metal
 rap rock
@@ -249,6 +250,7 @@ vocal harmony group
 metal
 neo classical metal
 power pop
+indie poptimism
 canadian contemporary r&b
 philly rap
 swedish hard rock
@@ -256,6 +258,8 @@ bow pop
 industrial rock
 novelty
 trance
+complextro
+electro house
 social media pop
 ghanaian hip hop
 dance-punk
@@ -264,7 +268,6 @@ escape room
 viral trap
 dfw rap
 australian rock
-indie poptimism
 dixieland
 jazz trumpet
 new orleans jazz
@@ -288,6 +291,7 @@ broadway
 show tunes
 electropowerpop
 uk americana
+progressive electro house
 dancehall
 soca
 e6fi
@@ -295,7 +299,6 @@ twee pop
 cowboy western
 uk reggae
 psychedelic folk rock
-rap metal
 italo house
 melbourne bounce international
 exotica
@@ -304,7 +307,6 @@ canadian rock
 old school hip hop
 indie rock
 harlem hip hop
-electro house
 smooth jazz
 p funk
 gospel r&b
@@ -316,6 +318,8 @@ liquid funk
 manchester hip hop
 uk dnb
 bronx hip hop
+electro
+filter house
 new orleans blues
 movie tunes
 deep soft rock
@@ -325,6 +329,10 @@ bmore
 swedish synthpop
 underground power pop
 alaska indie
+bass trap
+brostep
+electronic trap
+vapor twitch
 san marcos tx indie
 surf music
 zolo
@@ -350,14 +358,13 @@ yugoslav rock
 indie pop rap
 australian alternative rock
 italian disco
+modern folk rock
 scottish rock
 memphis blues
-electro
 uk contemporary r&b
 desi hip hop
 desi pop
 rock steady
-electronic trap
 idol
 indiecoustica
 virgin islands reggae
@@ -398,6 +405,7 @@ ska revival
 alternative country
 slow core
 moog
+nc hip hop
 canadian latin
 dutch prog
 dutch rock
@@ -463,20 +471,20 @@ german metal
 medieval rock
 neue deutsche harte
 alabama rap
-bass trap
 danish electronic
 traprun
 no wave
 anarcho-punk
+atl trap
 madchester
 old school thrash
 speed metal
 thrash metal
+boston rock
 native american
 new mexico music
 synth punk
 battle rap
-progressive electro house
 brass band
 new orleans funk
 second line
