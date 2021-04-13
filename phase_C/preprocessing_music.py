@@ -116,7 +116,7 @@ Genre = Genre.drop(columns = ["relevant"])
 
 #final exports 
 BillboardChart.to_csv("BillboardChart.txt", header = False, index = False, sep = '\t')
-Song.to_csv("Song.txt", header = False, index = False, sep = '\t')
+Song.to_csv("Song.txt", header = False, index = False, sep = '\t', float_format = "%.5f")
 Genre.to_csv("Genre.txt", header = False, index = False, sep = '\t')
 SongGenre.to_csv("SongGenre.txt", header = False, index = False, sep = '\t')
 
