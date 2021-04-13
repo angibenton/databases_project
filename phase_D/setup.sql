@@ -1,6 +1,7 @@
 --Emilia Ochoa (eochoa6)
 --Angi Benton (abenton3)
 
+DROP TABLE IF EXISTS EconomicHealth;
 CREATE TABLE EconomicHealth 
 (
 year INT,
@@ -23,6 +24,7 @@ SELECT * FROM EconomicHealth;
 
 
 --Create Administration relation
+DROP TABLE IF EXISTS Administration;
 CREATE TABLE Administration
 (
 president VARCHAR(25),
@@ -42,6 +44,7 @@ SELECT * FROM Administration;
 
 
 --Create Genre relation
+DROP TABLE IF EXISTS Genre;
 CREATE TABLE Genre
 (
 genre VARCHAR(50),
@@ -58,6 +61,7 @@ SELECT * FROM Genre;
 
 
 --Create Song relation
+DROP TABLE IF EXISTS Song;
 CREATE TABLE Song 
 (
 id INT, 
@@ -84,7 +88,7 @@ CHECK(0 <= liveness AND liveness <= 1),
 CHECK(0 <= valence AND valence <= 1)
 );
 
-DROP TABLE Song
+
 --Change this to your full path
 LOAD DATA LOCAL INFILE '/Users/angibenton/Desktop/databases/databases_project/phase_C/Song.txt' 
 INTO TABLE Song
@@ -108,6 +112,7 @@ SELECT * FROM Song;
 
 
 --Create SongGenre relation
+DROP TABLE IF EXISTS SongGenre;
 CREATE TABLE SongGenre
 (
 songID INT,
@@ -128,6 +133,7 @@ SELECT * FROM SongGenre;
 
 
 --Create BillboardChart relation
+DROP TABLE IF EXISTS BillboardChart;
 CREATE TABLE BillboardChart 
 (
 songID INT, 
@@ -143,5 +149,5 @@ INTO TABLE BillboardChart
 COLUMNS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'; 
 
-SELECT * FROM BillboardChart
+SELECT * FROM BillboardChart;
 
