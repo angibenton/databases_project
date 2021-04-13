@@ -1,38 +1,34 @@
 --Emilia Ochoa (eochoa6)
 --Angi Benton (abenton3)
 
--- 1. Who was the most popular musician during each U.S. president's administration?
-
+-- 1. What artist had the most songs in the top 100s during each U.S presidents administration?
+-- *Note: since we only have music data up till 2017, the max number of times an artist appears in top 100
+--        during the trump admin was 3 times. Four different artists appeared 3 times
 WITH 
         songNArtist AS (SELECT artist, Song.id AS songID, position, year
                         FROM BillboardChart JOIN Song
                         WHERE Song.id = BillboardChart.songID),
                         
-        adminlength AS (SELECT president, startyear, endyear, (endyear-startyear) AS length
-                        FROM Administration),
-                        
-        songPosOverAdmin AS (SELECT songID, president, artist, (AVG(B.position)/length) AS songPos
-                             FROM adminlength JOIN songNArtist 
-                             WHERE songNArtist.year >= adminlength.startYear AND songNArtist.year < adminlength.endYear
-                             GROUP BY songID, president),
-
-        artistsPosOverAdmin AS (SELECT artist, president, AVG(songPos)
-                                FROM songPosOverAdmin
-                                GROUP BY artist, president),
+        artistsNums AS (SELECT president, artist, COUNT(songID) AS numHits
+                                FROM songNArtist JOIN Administration
+                                ON songNArtist.year >= startYear AND songNArtist.year < endYear
+                                GROUP BY artist, president
+                                ORDER BY startYear),
                                 
-        maxPosOverAdmin AS (SELECT MIN(artistPos) as m, president
-                            FROM artistsPosOverAdmin
+        maxNums AS (SELECT MAX(numHits) AS m, president
+                            FROM artistsNums
                             GROUP BY president)
-SELECT *
-FROM artistsPosOverAdmin AS A JOIN maxPosOverAdmin AS M
+                            
+SELECT M.president, A.artist
+FROM artistsNums AS A JOIN maxNums AS M
 ON A.president = M.president 
-WHERE A.artistPos = M.m
+WHERE A.numHits = M.m
 
---2. What was the most popular genre per decade?
+--2. List the top song of each year of the administrations where unemployment increased (from start to end of administration)
 
-
---3. What is the average 'energy' of the top 100 songs during years when unemployment has fallen dramatically (e.g., < 5%)?
 --5. What is the average song duration, grouped by genre?
+
+
 --6. What were the years where the average tempo of the top 100 tracks was > 120 bpm, the average 'energy' was > 0.5, the and the S&P 500 grew by > 10%?
 --*7. What was the mean track popularity during recession years, grouped by genre?
 --9. Which artists released their greatest hits during recessions?
@@ -80,7 +76,7 @@ FROM yrs JOIN topGenreByYr
 WITH popcntbyyr AS  (SELECT BC.year, COUNT(SG.songID) AS cnt
                      FROM SongGenre AS SG JOIN BillboardChart AS BC
                      ON SG.songID = BC.songID
-                     WHERE SG.genre LIKE '%pop%'        
+                     WHERE SG.genre LIKE 'pop'        
                      GROUP BY BC.year),
 
      yearMaxes AS (SELECT A.year, MAX(A.cnt) AS maxs
@@ -103,14 +99,13 @@ WITH  vsongsbyyr AS (SELECT year, AVG(Song.valence) AS avgv
                     WHERE Song.id = BillboardChart.songID 
                     GROUP BY BillboardChart.year)
                     
-SELECT *
+SELECT yrs.year, avgv AS avgValence
 FROM vsongsbyyr JOIN (SELECT year
                       FROM EconomicHealth
-                      WHERE uemploymentRate > 4.0) AS yrs
+                      WHERE unemploymentRate > 4.0) AS yrs
 WHERE vsongsbyyr.year = yrs.year
                     
 
---*14. What was the average unemployment date during years when the majority of the top 100 songs were ‘minor’ ?
 --15. What was the percentage of songs listed as ‘explicit’ during years where gdp and S&P Roi both fell 
 WITH  songs AS   (SELECT Song.explicit, Song.id AS songID, year
                   FROM BillboardChart JOIN Song
@@ -157,12 +152,13 @@ FROM rapCntByYr JOIN yearMaxes
 --19. What was the average ‘popularity’ of top songs with a tempo over 125, during years where the average unemployment rate was below 3%? 
 WITH    yrs     AS (SELECT year
                     FROM EconomicHealth
-                    WHERE uemploymentRate < 3.0)
+                    WHERE unemploymentRate < 4.0)
+
 SELECT year, AVG(popularity) AS popAvg
-FROM Song JOIN (SELECT id, year
+FROM Song JOIN (SELECT songID, yrs.year
                 FROM BillboardChart JOIN yrs
                 ON BillboardChart.year = yrs.year) AS yr
-ON Song.id = yr.id
+ON Song.id = yr.songID
 WHERE tempo > 125
 GROUP BY year;
 
@@ -170,8 +166,8 @@ GROUP BY year;
 --20. What was the average unemployment rate of years where the top song was labeled 'explicit'
 WITH exyrs       AS (SELECT year
                     FROM Song JOIN BillboardChart
-                    ON Song.id = BillBoardChart.songID
-                    WHERE BillboardChart.positon = 1 AND Song.explicit = 'TRUE')
+                    ON Song.id = BillboardChart.songID
+                    WHERE BillboardChart.position = 1 AND Song.explicit = 'TRUE')
 
 SELECT unemploymentRate
 FROM exyrs JOIN EconomicHealth
