@@ -46,6 +46,24 @@ SELECT * FROM SongGenre WHERE songId LIKE '20180%';
 DELETE FROM Song
 WHERE id like '20180%';
 
--- TODO EconomicHealth 
+--Updates to EconomicHealth 
+-- to coincide with our new music data, we thought itd be useful to have the full economic data from 2018-2020
+INSERT INTO EconomicHealth 
+(year,unemploymentRate,realGdpPch,snpRoi)
+VALUES 
+(2018, 3.9, 3.0, -6.24),
+(2019, 3.7, 2.2, 28.99),
+(2020, 8.1, -3.5, 16.26);
+
+--checkoutput 
+SELECT * FROM EconomicHealth WHERE year >=2018
 
 -- TODO Administration 
+INSERT INTO Administration 
+(president, startYear, endYear)
+VALUES 
+(Harry S. Truman, 1945, 1953),
+(Franklin D. Roosevelt, 1933, 1945),
+(Herbert Hoover, 1929, 1933);
+
+

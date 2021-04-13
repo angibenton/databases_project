@@ -40,19 +40,57 @@ WHERE A.artistPos = M.m
 --*7. What was the mean track popularity during recession years, grouped by genre?
 --*8. What song was most popular on days that the unemployment rate hit record lows?
 --9. Which artists released their greatest hits during recessions?
---10. What is the average ‘danceability’ of the most popular songs released during years where the stock market fell more than 700 points?
+
+--10. What is the average ‘danceability’ of the most popular songs during years where the S&P Roi fell > 5%s?
+WITH 
+        yrs AS( SELECT year
+                FROM EconomicHealth
+                WHERE snpRoi < 5.0),
+                
+        songs AS (SELECT Song.danceability, Song.id AS songID, position, year
+                  FROM BillboardChart JOIN Song
+                  WHERE Song.id = BillboardChart.songID AND danceability != 0.0)
+                
+SELECT songs.year, AVG(danceability)
+FROM songs JOIN yrs 
+        ON songs.year = yrs.year
+GROUP BY songs.year
+
 --11. What was the most popular genre of music in each of the years where overall GDP decreased?
+WITH 
+        yrs AS( SELECT year
+                FROM EconomicHealth
+                WHERE realGdpPch < 0),
+                
+       genreCntPerYr AS  (SELECT BC.year, SG.genre, COUNT(SG.songID) AS cnt
+                     FROM SongGenre AS SG JOIN BillboardChart AS BC
+                     ON SG.songID = BC.songID
+                     GROUP BY SG.genre, BC.year),
+                     
+       yearMaxes AS (SELECT year, MAX(cnt) AS maxs
+                     FROM genreCntPerYr
+                     GROUP BY year),
+
+       topGenreByYr AS (SELECT YM.year, genre, cnt
+                        FROM yearMaxes AS YM JOIN genreCntPerYr AS GC
+                        ON YM.maxs = GC.cnt AND YM.year = GC.year)
+                        
+SELECT yrs.year, genre, cnt
+FROM yrs JOIN topGenreByYr
+        ON yrs.year = topGenreByYr.year
+
+
 --12. What was the average unemployment rate during years where ‘pop’ was the most popular genre?
 --13. What was the average ‘valence’ of the top 100 songs in years where the unemployment rate was above 4%, listed in increasing order?
 --*14. What was the average unemployment date during years when the majority of the top 100 songs were ‘minor’ ?
 --*15. What was the percentage of songs listed as ‘explicit’ during years where the stock market fell more than 300 points?
 
---16. List the years where the most popular genre in the top 100 songs was ‘pop’, --- and the S&P 500 stayed within 10%
+--16. List the years where the most popular genre in the top 100 songs was ‘rap’
 
-WITH popCntByYr AS  (SELECT BC.year, COUNT(SG.songID) AS cnt
+WITH rapCntByYr AS  (SELECT BC.year, COUNT(SG.songID) AS cnt
                      FROM SongGenre AS SG JOIN BillboardChart AS BC
                      ON SG.songID = BC.songID
-                     WHERE SG.genre LIKE 'pop'        
+                     WHERE SG.genre LIKE '%rap%'        
                      GROUP BY BC.year),
 
      yearMaxes AS (SELECT A.year, MAX(A.cnt) AS maxs
@@ -61,9 +99,9 @@ WITH popCntByYr AS  (SELECT BC.year, COUNT(SG.songID) AS cnt
                          ON SG.songID = BC.songID
                          GROUP BY SG.genre, BC.year)  AS A
                    GROUP BY A.year)
-SELECT yearMaxes.year AS year, maxs as numPopSongs
-FROM popCntByYr JOIN yearMaxes 
-        ON popCntByYr.cnt = maxs AND popCntByYr.year = yearMaxes.year
+SELECT yearMaxes.year
+FROM rapCntByYr JOIN yearMaxes 
+        ON rapCntByYr.cnt = maxs AND rapCntByYr.year = yearMaxes.year
 
 
 --17. For each year where unemployment decreased by more than 1%, what was the average  ‘liveliness’ of the top 100 songs released in January, vs those released in December?
