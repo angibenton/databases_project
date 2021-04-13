@@ -23,4 +23,4 @@ admins['endYear'] = prezs.end.str.extract(r'\b(\w+)$', expand=True)
 admins = admins[(admins.startYear >= START_YEAR) & (admins.startYear <= END_YEAR)]
 
 #export to a text file with no row numbers, no headers
-admins.to_csv("Administration.txt", index = False, header = False) 
+admins.to_csv("Administration.txt", index = False, header = False, sep = '\t') 

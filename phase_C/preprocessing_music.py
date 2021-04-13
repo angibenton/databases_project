@@ -10,14 +10,6 @@ import json
 def removeFeature(artistName):
   return artistName.split(' featuring')[0]
 
-#e.g., "Sugar, we're going down" -> "sugar we're going down "
-def removeComma(title):
-  #title = title.replace('\"', '')
-  #return title.replace('\'', '')
-  return title.replace(',', '')
-
-
-
 # get an array of genres from strings of the form "['pop', 'rap']"
 def getGenreArrayFromString(str):
   try: 
@@ -33,8 +25,8 @@ bb = pd.read_csv("billboard_yearly.csv")
 hotSpotify = pd.read_csv("hotSpotify.csv", encoding ='latin1')
 
 #set up the dataframes for each of our relations 
-Song = pd.DataFrame(columns = ['songId', 'title', 'artist', 'genres', 'key', 'tempo', 
-'danceability', 'energy', 'acousticness', 'instrumentalness', 'liveness', 'valence'])
+Song = pd.DataFrame(columns = ['songId', 'title', 'artist', 'genres', 'key', 'tempo', 'explicit', 
+'popularity', 'danceability', 'energy', 'acousticness', 'instrumentalness', 'liveness', 'valence'])
 BillboardChart = pd.DataFrame(columns = ['songId', 'chartYear', 'chartPosition'], dtype = int)
 Genre = pd.DataFrame(columns = ["genreName"]) 
 SongGenre = pd.DataFrame(columns = ["songId", "genreName"])
@@ -80,6 +72,8 @@ for bbIndex, bbRow in Song.iterrows():
       Song.loc[bbIndex, 'genres'] = spotRow['spotify_genre']
       Song.loc[bbIndex, 'key'] = spotRow['key']
       Song.loc[bbIndex, 'tempo'] = spotRow['tempo']
+      Song.loc[bbIndex, 'explicit'] = spotRow['spotify_track_explicit']
+      Song.loc[bbIndex, 'popularity'] = spotRow['spotify_track_popularity']
       #special spotify characteristics 
       Song.loc[bbIndex, 'danceability'] = spotRow['danceability']
       Song.loc[bbIndex, 'energy'] = spotRow['energy']

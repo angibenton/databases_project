@@ -29,7 +29,7 @@ econHealth["snpRoi"] = snp_roi['roi']
 econHealth = econHealth[(econHealth.year >= START_YEAR) & (econHealth.year <= END_YEAR)]
 
 #export to a text file with no row numbers, no headers, and 4 decimal places 
-econHealth.to_csv("EconomicHealth.txt", index = False, header = False, float_format = "%.4f") 
+econHealth.to_csv("EconomicHealth.txt", index = False, header = False, float_format = "%.4f", sep = '\t') 
 
 
 
