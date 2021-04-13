@@ -167,7 +167,17 @@ WHERE tempo > 125
 GROUP BY year;
 
 
---20. What was the average unemployment rate of years where the top song was labeled 'explicit', and years where it was not? 
+--20. What was the average unemployment rate of years where the top song was labeled 'explicit'
+WITH exyrs       AS (SELECT year
+                    FROM Song JOIN BillboardChart
+                    ON Song.id = BillBoardChart.songID
+                    WHERE BillboardChart.positon = 1 AND Song.explicit = 'TRUE')
+
+SELECT unemploymentRate
+FROM exyrs JOIN EconomicHealth
+ON exyrs.year = EconomicHealth.year
+
+
 
 -- For each genre, for how many years was the top song in this genre? (exclude genres without any no. 1s)
 WITH NumOneSongs AS (SELECT songId, year 
