@@ -70,3 +70,17 @@ FROM popCntByYr JOIN yearMaxes
 --18. What was the average tempo of the top 100 songs of each decade, compared to the average tempo of the top 100 songs in the year with the highest unemployment rate in each decade? 
 --*19. What was the average ‘popularity’ of songs with a tempo over 125, during years where the average unemployment rate was below 3%? 
 --*20. What was the average unemployment rate of years where the top song was labeled 'explicit', and years where it was not? 
+
+-- For each genre, for how many years was the top song in this genre? (exclude genres without any no. 1s)
+WITH NumOneSongs AS (SELECT songId, year 
+                     FROM BillboardChart 
+                     WHERE position = 1)
+SELECT genre, COUNT(year) AS numYearsTopSong
+FROM NumOneSongs AS nos 
+JOIN SongGenre as sg 
+ON nos.songId = sg.songId
+GROUP BY genre 
+ORDER BY numYearsTopSong DESC
+
+
+
