@@ -26,7 +26,6 @@ FROM artistsNums AS A JOIN maxNums AS M
 ON A.president = M.president 
 WHERE A.numHits = M.m
 
-
 --2. List the top song of each year of the administrations where unemployment increased (from start to end of administration)
 WITH topsongs       AS (SELECT songID, song, artist, year
                         FROM BillboardChart JOIN Song
@@ -48,15 +47,16 @@ FROM topsongs JOIN uincadmins
 WHERE topsongs.year >= st AND topsongs.year < end
 
 
---3. What is the average popularity, energy, and danceability of top 100 songs, grouped by genre?
+--5. What is the average popularity, energy, and danceability of top 100 songs, grouped by genre?
 SELECT genre, AVG(popularity) AS popularity, AVG(energy) AS energy, AVG(danceability) AS danceability
 FROM SongGenre JOIN Song
 ON SongGenre.songID = Song.id
 WHERE popularity IS NOT NULL
 GROUP BY genre
 
-
---4. What is the average ‘danceability’ of the most popular songs during years where the S&P Roi fell > 5%s?
+--6. What were the years where the average tempo of the top 100 tracks was > 120 bpm, the average 'energy' was > 0.5, the and the S&P 500 grew by > 10%?
+--*7. What was the mean track popularity during recession years, grouped by genre?
+--10. What is the average ‘danceability’ of the most popular songs during years where the S&P Roi fell > 5%s?
 WITH    yrs AS( SELECT year
                 FROM EconomicHealth
                 WHERE snpRoi < 5.0),
@@ -70,25 +70,7 @@ FROM songs JOIN yrs
         ON songs.year = yrs.year
 GROUP BY songs.year
 
-
-
--- 4.5 ^^ What about the average 'danceability' when the S&P ROI was exceptionally high (> 28%)?
-WITH 
-        yrs AS( SELECT year
-                FROM EconomicHealth
-                WHERE snpRoi >= 28.0),
-                
-        songs AS (SELECT Song.danceability, Song.id AS songID, position, year
-                  FROM BillboardChart JOIN Song
-                  WHERE Song.id = BillboardChart.songID AND danceability != 0.0)
-                
-SELECT songs.year, AVG(danceability)
-FROM songs JOIN yrs 
-        ON songs.year = yrs.year
-GROUP BY songs.year;
-
-
---5. What was the most popular genre of music in each of the years where overall GDP decreased?
+--11. What was the most popular genre of music in each of the years where overall GDP decreased?
 WITH   genreCntPerYr AS  (SELECT BC.year, SG.genre, COUNT(SG.songID) AS cnt
                      FROM SongGenre AS SG JOIN BillboardChart AS BC
                      ON SG.songID = BC.songID
@@ -108,11 +90,12 @@ FROM topGenreByYr JOIN (SELECT year
                 WHERE realGdpPch < 0) as yrs
 ON yrs.year = topGenreByYr.year
 
---6. What was the average unemployment rate during years where ‘pop’ was the most popular genre?
+
+--12. What was the average unemployment rate during years where ‘pop’ was the most popular genre?
 WITH popcntbyyr AS  (SELECT BC.year, COUNT(SG.songID) AS cnt
                      FROM SongGenre AS SG JOIN BillboardChart AS BC
                      ON SG.songID = BC.songID
-                     WHERE SG.genre = 'pop'        
+                     WHERE SG.genre LIKE 'pop'        
                      GROUP BY BC.year),
      yearMaxes AS (SELECT A.year, MAX(A.cnt) AS maxs
                    FROM (SELECT BC.year, SG.genre, count(SG.genre) AS cnt
@@ -127,7 +110,7 @@ FROM EconomicHealth JOIN (  SELECT yearMaxes.year AS year
 WHERE EconomicHealth.year = popyrs.year
 
 
---7. What was the average ‘valence’ of the top 100 songs in years where the unemployment rate was above 4%, listed in increasing order?
+--13. What was the average ‘valence’ of the top 100 songs in years where the unemployment rate was above 4%, listed in increasing order?
 WITH  vsongsbyyr AS (SELECT year, AVG(Song.valence) AS avgv
                     FROM BillboardChart JOIN Song
                     WHERE Song.id = BillboardChart.songID 
@@ -140,7 +123,7 @@ FROM vsongsbyyr JOIN (SELECT year
 WHERE vsongsbyyr.year = yrs.year
                     
 
---8. What was the percentage of songs listed as ‘explicit’ during years where gdp and S&P Roi both fell 
+--15. What was the percentage of songs listed as ‘explicit’ during years where gdp and S&P Roi both fell 
 WITH  exsongs AS (SELECT year, COUNT(songID) AS exNum
                   FROM (SELECT Song.explicit, Song.id AS songID, year
                         FROM BillboardChart JOIN Song
@@ -159,41 +142,29 @@ WITH  exsongs AS (SELECT year, COUNT(songID) AS exNum
         ON perbyyr.year = yrs.year
 
 
--- 9 For each year, list the amount of songs in the top 100 that are in some kind of rap genre 
--- order by the year, in order to watch how rap music has become more popular 
-SELECT BC.year, COUNT(DISTINCT SG.songID) AS numRapSongs
-FROM SongGenre AS SG JOIN BillboardChart AS BC
-ON SG.songID = BC.songID
-WHERE SG.genre LIKE '%rap%'        
-GROUP BY BC.year
-ORDER BY BC.year 
 
--- 10. What was the average acousticness of the top 100 songs of each decade ?
-WITH  Decade AS (SELECT DISTINCT B1.year, (SELECT MIN(B2.year) 
-                                           FROM BillboardChart AS B2 
-                                           WHERE B1.year DIV 10 = B2.year DIV 10)
-                                           AS decade
-                  FROM BillboardChart AS B1
-                  WHERE B1.year != 1959)
-SELECT decade, AVG(S.acousticness) AS avgAcousticness
-FROM Decade AS D
-JOIN BillboardChart AS BC ON D.year = BC.year 
-JOIN Song AS S ON S.id = BC.songId 
-WHERE S.acousticness IS NOT NULL
-GROUP BY D.decade;             
-                 
+--16. List the years where the most popular genre in the top 100 songs was some kind of rap
+'TODO: would this double count songs with cateogories rap and atl rap'
+WITH rapCntByYr AS  (SELECT BC.year, COUNT(SG.songID) AS cnt
+                     FROM SongGenre AS SG JOIN BillboardChart AS BC
+                     ON SG.songID = BC.songID
+                     WHERE SG.genre LIKE '%rap%'        
+                     GROUP BY BC.year),
 
--- 11. What was the most popular song of the 5 years with the highest unemployment rate ?
-SELECT BC.year, EH.unemploymentRate, S.song, S.artist 
-FROM BillboardChart AS BC
-JOIN Song AS S ON S.id = BC.songId 
-JOIN EconomicHealth AS EH ON EH.year = BC.year
-WHERE BC.position = 1
-ORDER BY EH.unemploymentRate DESC 
-LIMIT 5;
+     yearMaxes AS (SELECT A.year, MAX(A.cnt) AS maxs
+                   FROM (SELECT BC.year, SG.genre, count(SG.genre) AS cnt
+                         FROM SongGenre AS SG JOIN BillboardChart AS BC
+                         ON SG.songID = BC.songID
+                         GROUP BY SG.genre, BC.year)  AS A
+                   GROUP BY A.year)
+SELECT yearMaxes.year
+FROM rapCntByYr JOIN yearMaxes 
+        ON rapCntByYr.cnt = maxs AND rapCntByYr.year = yearMaxes.year
 
 
---12. What was the average ‘popularity’ of top songs with a tempo over 125, during years where the average unemployment rate was below 3%? 
+--17. For each year where unemployment decreased by more than 1%, what was the average  ‘liveliness’ of the top 100 songs released in January, vs those released in December?
+--18. What was the average tempo of the top 100 songs of each decade, compared to the average tempo of the top 100 songs in the year with the highest unemployment rate in each decade? 
+--19. What was the average ‘popularity’ of top songs with a tempo over 125, during years where the average unemployment rate was below 3%? 
 WITH    yrs     AS (SELECT year
                     FROM EconomicHealth
                     WHERE unemploymentRate < 4.0)
@@ -207,9 +178,7 @@ WHERE tempo > 125
 GROUP BY year;
 
 
-
-
---13. What was the average unemployment rate of years where the top song was labeled 'explicit'
+--20. What was the average unemployment rate of years where the top song was labeled 'explicit'
 WITH exyrs       AS (SELECT year
                     FROM Song JOIN BillboardChart
                     ON Song.id = BillboardChart.songID
@@ -219,7 +188,8 @@ FROM exyrs JOIN EconomicHealth
 ON exyrs.year = EconomicHealth.year
 
 
--- 14. For each genre, for how many years was the top song in this genre? (exclude genres without any no. 1s)
+
+-- For each genre, for how many years was the top song in this genre? (exclude genres without any no. 1s)
 WITH NumOneSongs AS (SELECT songId, year 
                      FROM BillboardChart 
                      WHERE position = 1)
@@ -229,20 +199,6 @@ JOIN SongGenre as sg
 ON nos.songId = sg.songId
 GROUP BY genre 
 ORDER BY numYearsTopSong DESC
-
-
-
--- HELPER: FOR QUERIES INVOLVING DECADES 
-SELECT DISTINCT B1.year, MOD((SELECT MIN(B2.year) 
-                              FROM BillboardChart AS B2 
-                              WHERE B1.year DIV 10 = B2.year DIV 10),
-                              100) AS decadeID
-FROM BillboardChart AS B1
-WHERE B1.year != 1959
-ORDER BY year
-
--- NOTE: for queries involving decades, we simply exclude 1959 and start at 1960. 
-
 
 
 

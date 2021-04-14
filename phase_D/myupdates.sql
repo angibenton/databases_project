@@ -46,7 +46,7 @@ SELECT * FROM SongGenre WHERE songId LIKE '20180%';
 DELETE FROM Song
 WHERE id like '20180%';
 
---Insert to EconomicHealth 
+-- TODO EconomicHealth 
 -- to coincide with our new music data, we thought itd be useful to have the full economic data from 2018-2020
 INSERT INTO EconomicHealth 
 (year,unemploymentRate,realGdpPch,snpRoi)
@@ -54,29 +54,8 @@ VALUES
 (2018, 3.9, 3.0, -6.24),
 (2019, 3.7, 2.2, 28.99),
 (2020, 8.1, -3.5, 16.26);
-
---check output 
+--checkoutput 
 SELECT * FROM EconomicHealth WHERE year >=2018
 
--- Delete from EconomicHealth 
--- All we need is to delete the years, because there are no foreign constraints 
-DELETE FROM EconomicHealth
-WHERE year = 2018 OR year = 2019 OR year = 2020;
 
-
--- Inserts to Administration
-INSERT INTO Administration (president, startYear, endYear)
-VALUES 
-("Joseph R. Biden", 2021, 2021),
-("Harry S. Truman", 1945, 1953),
-("Franklin D. Roosevelt", 1933, 1945);
-
---check output
-SELECT * FROM Administration WHERE startYear = 2021 OR startYear = 1945 OR startYear = 1933
---Note* we put Biden 2021-2021 because we will not have data yet for future years
-
---Delete from Administration 
--- All we need is to delete the admins, because there's no foreign constraints
-DELETE FROM Administration
-WHERE president = "Joseph R. Biden" OR president = "Harry S. Truman" OR president = "Franklin D. Roosevelt";
-
+-- TODO Administration 

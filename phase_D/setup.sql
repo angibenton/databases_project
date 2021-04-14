@@ -15,7 +15,7 @@ CHECK (-100 <= snpRoi)
 );
 
 --Change this to your full path
-LOAD DATA LOCAL INFILE '/Users/angibenton/Desktop/databases/databases_project/phase_C/EconomicHealth.txt' 
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases/databases_project/phase_C/EconomicHealth.txt' 
 INTO TABLE EconomicHealth
 COLUMNS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'; 
@@ -31,11 +31,11 @@ president VARCHAR(25),
 startYear INT,
 endYear INT,
 PRIMARY KEY (startYear, endYear),
-CHECK (1953 <= startYear AND startYear <= 2017)
+CHECK (startYear <= 2021)
 );
 
 --Change this to your full path
-LOAD DATA LOCAL INFILE '/Users/angibenton/Desktop/databases/databases_project/phase_C/Administration.txt' 
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases/databases_project/phase_C/Administration.txt' 
 INTO TABLE Administration
 COLUMNS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'; 
@@ -52,7 +52,7 @@ PRIMARY KEY (genre)
 );
 
 --Change this to your full path
-LOAD DATA LOCAL INFILE '/Users/angibenton/Desktop/databases/databases_project/phase_C/Genre.txt' 
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases/databases_project/phase_C/Genre.txt' 
 INTO TABLE Genre
 COLUMNS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'; 
@@ -90,7 +90,7 @@ CHECK(0 <= valence AND valence <= 1)
 
 
 --Change this to your full path
-LOAD DATA LOCAL INFILE '/Users/angibenton/Desktop/databases/databases_project/phase_C/Song.txt' 
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases/databases_project/phase_C/Song.txt' 
 INTO TABLE Song
 COLUMNS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'
@@ -124,7 +124,7 @@ FOREIGN KEY (genre) REFERENCES Genre(genre) ON DELETE CASCADE ON UPDATE CASCADE
 
 
 --Change this to your full path
-LOAD DATA LOCAL INFILE '/Users/angibenton/Desktop/databases/databases_project/phase_C/SongGenre.txt' 
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases/databases_project/phase_C/SongGenre.txt' 
 INTO TABLE SongGenre
 COLUMNS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'; 
@@ -144,7 +144,7 @@ FOREIGN KEY(songId) REFERENCES Song(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --Change this to your full path
-LOAD DATA LOCAL INFILE '/Users/angibenton/Desktop/databases/databases_project/phase_C/BillboardChart.txt' 
+LOAD DATA LOCAL INFILE '/Users/emi.ochoa/databases/databases_project/phase_C/BillboardChart.txt' 
 INTO TABLE BillboardChart
 COLUMNS TERMINATED BY '\t'
 LINES TERMINATED BY '\n'; 
