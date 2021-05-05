@@ -1,4 +1,4 @@
-<body>
+<body>George H.W. Bush
 <?php
         //open a connection to dbase server
         include 'open.php';
@@ -7,7 +7,7 @@
         echo "<br><br>";
 	echo "You entered ";
 	echo $president;
-if (empty($president)){
+if (empty($president) || mysqli_num_rows($conn->query($myQuery)) == 0 ){
    echo "ERROR: President not found ";
    echo $president;
    echo " not found";
