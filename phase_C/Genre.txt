@@ -21,12 +21,14 @@ new romantic
 new wave
 new wave pop
 synthpop
+blues rock
+motown
+classic soul
 europop
 pop rock
 art rock
 permanent wave
 disco
-classic soul
 jazz blues
 memphis soul
 soul
@@ -88,7 +90,6 @@ underground hip hop
 new jack swing
 new orleans rap
 funk
-motown
 yacht rock
 new jersey rap
 british soul
@@ -141,10 +142,10 @@ chicago soul
 boy band
 chicago rap
 miami hip hop
-blues rock
 hard rock
 southern rock
 symphonic rock
+indie soul
 folk-pop
 indie folk
 indie pop
@@ -233,8 +234,9 @@ brit funk
 hardcore hip hop
 ballroom
 celtic rock
+classical performance
+orchestral performance
 canadian country
-indie soul
 neo-singer-songwriter
 alternative dance
 indietronica
@@ -253,6 +255,7 @@ power pop
 indie poptimism
 canadian contemporary r&b
 philly rap
+calming instrumental
 swedish hard rock
 bow pop
 industrial rock
@@ -340,8 +343,6 @@ honky tonk
 canadian folk
 nederpop
 colombian pop
-classical performance
-orchestral performance
 jam band
 orchestra
 nyc rap
@@ -379,6 +380,9 @@ portland indie
 trap queen
 romantico
 sleaze rock
+freak folk
+lo-fi
+new weird america
 jazz brass
 jazz trombone
 new beat
